@@ -14,7 +14,14 @@ const {BlogPost} = require('../models');
 
 //seed data into test db
 function seedTestDb(){
+    //input 10 items into TEST_DATABASE_URL
+    const testData = [];
 
+    for(i = 1; i <= 10; i++){
+        testData.push(testDataModel());
+    }
+
+    return BlogPosts.insertMany(testData);
 }
 
 //create dummy data using faker
@@ -33,5 +40,24 @@ function testDataModel(){
 
 //tear down test db
 function tearDownDb(){
-
+    console.warning("Deleting database");
+    return mongoose.connect.dropDatabase();
 }
+
+describe('Blog api' function(){
+    before(function(){
+        return runServer(TEST_DATABASE_URL);
+    });
+
+    beforeEach(function(){
+        return seedTestDb();
+    });
+
+    afterEach(function(){
+        return tearDownDb();
+    })
+
+    after(function(){
+        closeServer();
+    });
+});
