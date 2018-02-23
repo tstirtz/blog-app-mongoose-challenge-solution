@@ -18,7 +18,7 @@ function seedTestDb(){
     //input 10 items into TEST_DATABASE_URL
     const testData = [];
 
-    for(let i = 0; i < 10; i++){
+    for(let i = 1; i <= 10; i++){
         testData.push(testDataModel());
     }
     return BlogPost.insertMany(testData);
