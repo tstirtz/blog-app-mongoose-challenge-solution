@@ -160,11 +160,59 @@ describe('Blog api', function(){
 
     //test PUT
     describe('PUT endpoint', function(){
+        it('should update an existing post', function(){
+            //test data to updated
+            const updatePost = {
+                title: "New Title",
+                content: "New Content"
+            };
+            return BlogPost
+                .findOne()
+                .then(function(res){
+                    updatePost.id = res.id;
 
+                return chai.request(app)
+                    .put(`/posts/${updatePost.id}`)
+                    .send(updatePost)
+                    .then(function(res){
+                        expect(res).to.have.status(204);
+                        return BlogPost.findById(updatePost.id);
+                    })
+                    .then(function(post){
+                        expect(post).to.be.an('object');
+                        expect(post.title).to.equal(updatePost.title);
+                        expect(post.content).to.equal(updatePost.content);
+                        expect(post.id).to.equal(updatePost.id);
+                    })
+                });
+
+        });
     });
 
     //test DELETE
     describe('DELETE endpoint', function(){
-
+        it('should delete an existing post', function(){
+            //deleting a post by an id, so I need to retrieve an ID
+            //make DELETE request with retrieved id
+                //test status of response
+            //make findById call with retrieve id
+                //expect response to be null
+            let postId;
+            return BlogPost
+                .findOne()
+                .then(function(post){
+                    postId = post.id;
+                return chai.request(app)
+                    .delete(`/posts/${postId}`)
+                    .then(function(res){
+                        expect(res).to.have.status(204);
+                        return BlogPost.findById(postId);
+                    })
+                    .then(function(post){
+                        console.log(post);
+                        expect(post).to.be.a('null');
+                    });
+                });
+            });
     });
 });
