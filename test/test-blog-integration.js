@@ -18,7 +18,7 @@ function seedTestDb(){
     //input 10 items into TEST_DATABASE_URL
     const testData = [];
 
-    for(let i = 1; i <= 10; i++){
+    for(let i = 0; i < 10; i++){
         testData.push(testDataModel());
     }
     return BlogPost.insertMany(testData);
@@ -28,8 +28,8 @@ function seedTestDb(){
 function testDataModel(){
     return {
         author: {
-            first: faker.name.firstName(),
-            last: faker.name.lastName()
+            firstName: faker.name.firstName(),
+            lastName: faker.name.lastName()
         },
         title: faker.lorem.words(),
         content: faker.lorem.paragraph(),
@@ -49,6 +49,7 @@ describe('Blog api', function(){
     });
 
     beforeEach(function(){
+
         return seedTestDb();
     });
 
@@ -81,7 +82,43 @@ describe('Blog api', function(){
                 });
 
         });
+
         //should return posts by id
+        it('response should have correct keys', function(){
+            //make request for all posts
+            //get id of one posts and pass it to another .then block
+            //check that post contains all expected keys
+
+            let singlePost;
+
+            return chai.request(app)
+                .get('/posts')
+                .then(function(res){
+                    console.log(res.body);
+                    expect(res).to.have.status(200);
+                    expect(res).to.be.json;
+                    expect(res.body).to.be.an('array');
+
+                    res.body.forEach(function(post){
+                        expect(post).to.have.all.keys('author', 'title', 'content', 'created', 'id');
+                    });
+
+
+                    singlePost = res.body[0];
+                    return BlogPost.findById(singlePost.id);
+                })
+                .then(function(post){
+                    console.log(post);
+                    //res id to match singlePost.id
+                    expect(post.id).to.equal(singlePost.id);
+                    //keys to match
+                    expect(post.author).to.equal(singlePost.author);
+                    //values to match
+                    expect(post.title).to.equal(singlePost.title);
+                    expect(post.content).to.equal(singlePost.content);
+                });
+
+        });
     });
 
     //test POST
