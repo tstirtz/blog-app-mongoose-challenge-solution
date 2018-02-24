@@ -1,4 +1,10 @@
 language: node_js
 node_js: node
-services:
-    -mongodb
+services: "-mongodb"
+deploy:
+  provider: heroku
+  api_key:
+    secure: r/3mIqtg8PANgH4TYHKIa++0ygZl3MA6Hu8s98NPhIKAJDKkjZ72WhHj3nNB32pBPuSir5DqznjWCQAPNDebsX8FF0YDDjmQZjJQI+xWqJIJ/WMD2LrmeYmcFIUog0QotyC+rXwg+qEbCi7Oriu0B7uAVCKLlYoc/CwWnZOdP9h1OcCZTQUa5Y+AgYrcErytQluZ0okbV0Epz7q5XF9Pdjm14yJ3R5H46/RS4YCj8w20cw6oXIoDESGuvcV/ZfLOp43CatcnJlcczyhXCKVwYbGeQrbM/OWeRrpXVUj3+R6X0dKB2Sk0eLfcRP0MU0MOqnknlLaU/ytJS3x3+5Mve3V5dDKFijc6naGrWGl3fSpPs4cK9g+CFIWGBnnr2Xn+C5mSRUs1WhWZHd1qecnAJOnS3GjE8qGIpijzgED3hwyOqS0jCHmyOeUeYTM5nqOTRp/eVxetfMInPXbV6v4h/dmcAtwsi9ctq9G08YEjqzyO1ajiOTI2Cy+8ouy/u+Di7GDaPxFnuUIHiS/JDQKkx9SLv/EAlDb1k24qtP/eOQ3MEaUx7Q40J4VyQEQLSGO8j5B++fbZuDRLRm/dkFrBK/Jhqiyjjkl9vRbX7nD54SJY/bty2oZ4I2gdwh8LZ/5FfnDshts508LHjcMfVzmL46blbrRyO6i2/w57ixbC1vE=
+  app: immense-meadow-57946
+  on:
+    repo: tstirtz/blog-app-mongoose-challenge-solution
